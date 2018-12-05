@@ -27,7 +27,7 @@ public class Service {
         return accountList;
     }
 
-    public void Thread() {
+    public void thread() {
 
 
     }
@@ -35,12 +35,11 @@ public class Service {
     //public void TransferMoney(Account account1, Account account2, double sum) {
     public void transferMoney(List<Account> accountList) {
 
-        int ac1 = (int) Math.random() * 10;
+        int ac1 = (int) (Math.random() * 10);
 
         int ac2;
         do {
-            //ac2 = (int) Math.random() * 10;
-            ac2 = 5;
+            //ac2 = (int) (Math.random() * 10);
         } while (ac1 == ac2);
 
         Account account1;
@@ -54,16 +53,11 @@ public class Service {
             account2 = accountList.get(ac1);
         }
 
-
         if (account1.getBalance() > 0) {
             int summ = new Random().nextInt((int) account1.getBalance());
 
-//            System.out.println(summ);
-
             account1.setBalance(account1.getBalance() + summ);
             account2.setBalance(account2.getBalance() - summ);
-
-//            System.out.println(account1);
         }
 
     }
