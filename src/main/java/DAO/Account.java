@@ -1,9 +1,6 @@
 package DAO;
 
 import java.io.Serializable;
-import java.lang.reflect.GenericArrayType;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Account implements Serializable {
 

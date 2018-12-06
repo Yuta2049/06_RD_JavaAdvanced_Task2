@@ -5,6 +5,8 @@ import DAO.Account;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Service {
 
@@ -17,7 +19,7 @@ public class Service {
             Account account = new Account();
             account.setName(String.valueOf(Math.random()));
             //account.setBalance((int) Math.random().);
-            account.setBalance(1_000_000);
+            account.setBalance(1_000_000_000);
 
             accountList.add(account);
         }
@@ -27,40 +29,51 @@ public class Service {
         return accountList;
     }
 
-    public void thread() {
 
-
-    }
-
-    //public void TransferMoney(Account account1, Account account2, double sum) {
-    public void transferMoney(List<Account> accountList) {
-
-        int ac1 = (int) (Math.random() * 10);
-
-        int ac2;
-        do {
-            //ac2 = (int) (Math.random() * 10);
-        } while (ac1 == ac2);
-
-        Account account1;
-        Account account2;
-
-        if (ac1 < ac2) {
-            account1 = accountList.get(ac1);
-            account2 = accountList.get(ac2);
-        } else {
-            account1 = accountList.get(ac2);
-            account2 = accountList.get(ac1);
-        }
-
-        if (account1.getBalance() > 0) {
-            int summ = new Random().nextInt((int) account1.getBalance());
-
-            account1.setBalance(account1.getBalance() + summ);
-            account2.setBalance(account2.getBalance() - summ);
-        }
-
-    }
+//    //public void TransferMoney(Account account1, Account account2, double sum) {
+//    public void generateTransferMoney(List<Account> accountList) {
+//
+//        int ac1 = (int) (Math.random() * 10);
+//
+//        int ac2;
+//        do {
+//            ac2 = (int) (Math.random() * 10);
+//        } while (ac1 == ac2);
+//
+//        Account account1;
+//        Account account2;
+//
+//        if (ac1 < ac2) {
+//            account1 = accountList.get(ac1);
+//            account2 = accountList.get(ac2);
+//        } else {
+//            account1 = accountList.get(ac2);
+//            account2 = accountList.get(ac1);
+//        }
+//
+////        if (account1.getBalance() > 0) {
+//
+//        Lock l = new ReentrantLock();
+//        try {
+//
+//            int summ = new Random().nextInt((int) account1.getBalance());
+//
+//            transferMoney(account1, account2, summ);
+//
+//        }
+//
+//
+////        }
+//
+//    }
+//
+//
+//    public void transferMoney(Account account1, Account account2, long summ) {
+//
+//            account1.setBalance(account1.getBalance() + summ);
+//            account2.setBalance(account2.getBalance() - summ);
+//
+//    }
 
 }
 
