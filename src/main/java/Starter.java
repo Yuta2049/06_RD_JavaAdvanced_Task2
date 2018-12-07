@@ -26,69 +26,40 @@ public class Starter {
             storageService.writeToStorage(accountList);
         }
 
+        System.out.println("Сумма по всем аккаунтам: " + accountList.stream().mapToLong(x -> x.getBalance()).sum());
+
         ExecutorService executorService = Executors.newFixedThreadPool(20);
 
-        ReentrantLock lock = new ReentrantLock();
+        //ReentrantLock lock = new ReentrantLock();
 
         //executorService.execute(service.transferMoney(accountList));
 
-        for(int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {
             executorService.execute(new TransferService(accountList));
         }
 
         executorService.shutdown();
 
-        /*executorService.execute(new Runnable() {
-
-            Object call() throws Exception {
-            println("In thread")
-            return "From thread"
-
-            Future future = pool.submit(new Callable() {
-            }
-        })
-        println("From main")
-        println(future.get())
-
         try {
-            pool.submit(new Callable() {
-                Object call() throws Exception {
-                    throw new IllegalStateException()
-                }
-            }).get()
-        } catch (ExecutionException e) {println("Got it: ${e.cause}")}
+            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
 
-        pool.shutdown()*/
-
-        /*executor.submit(() -> {
-            String threadName = Thread.currentThread().getName();
-            System.out.println("Hello " + threadName);
-        });
-
-
-        try {
-            System.out.println("attempt to shutdown executor");
-            executor.shutdown();
-            executor.awaitTermination(5, TimeUnit.SECONDS);
         }
-        catch (InterruptedException e) {
-            System.err.println("tasks interrupted");
-        }
-        finally {
-            if (!executor.isTerminated()) {
-                System.err.println("cancel non-finished tasks");
-            }
-            executor.shutdownNow();
-            System.out.println("shutdown finished");
-        }*/
-
-        //for (int i = 0; i < 10; i++) {
-        //    service.transferMoney(accountList);
-        //}
 
         System.out.println();
-        //accountList.forEach(x -> System.out.println(x));
+
+//        try {
+//            Thread.currentThread().sleep(1000000);
+//        } catch (InterruptedException e) {
+//            System.out.println("Ошибка при переводе главного потока в состояние sleep");
+//        }
+
         accountList.forEach(x -> System.out.println(x));
+
+        //accountList.forEach(x -> x.getBalance());
+        System.out.println("Сумма по всем аккаунтам: " + accountList.stream().mapToLong(x -> x.getBalance()).sum());
+
+        //System.out.println(accountList.stream().mapToInt().sum();
 
     }
 }

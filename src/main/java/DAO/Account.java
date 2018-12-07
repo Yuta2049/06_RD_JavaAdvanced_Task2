@@ -1,11 +1,14 @@
 package DAO;
 
 import java.io.Serializable;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Account implements Serializable {
 
     private String name;
     private long balance;
+    public final Lock lock = new ReentrantLock();
 
     public String getName() {
         return name;
@@ -21,6 +24,10 @@ public class Account implements Serializable {
 
     public void setBalance(long balance) {
         this.balance = balance;
+    }
+
+    public Lock getLock() {
+        return lock;
     }
 
     @Override
