@@ -1,10 +1,6 @@
 package DAO;
 
-import service.Constants;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -12,7 +8,7 @@ public class Account implements Serializable {
 
     private String name;
     private long balance;
-    public final Lock lock = new ReentrantLock();
+    public final transient Lock lock = new ReentrantLock();
 
     public String getName() {
         return name;

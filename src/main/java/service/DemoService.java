@@ -1,6 +1,8 @@
 package service;
 
 import DAO.Account;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class DemoService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DAO.Account.class);
 
     public void showDemo() {
 
@@ -25,8 +29,7 @@ public class DemoService {
             storageService.writeToStorage(accountList);
         }
 
-        accountList.forEach(x -> System.out.println(x));
-
+        accountList.forEach(System.out::println);
         System.out.println("Сумма по всем аккаунтам: " + accountList.stream().mapToLong(x -> x.getBalance()).sum());
 
         ExecutorService executorService = Executors.newFixedThreadPool(Constants.QUANTITY_OF_THREADS);
@@ -40,25 +43,21 @@ public class DemoService {
         try {
             executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (InterruptedException e) {
-            // ТУТ ПИСАТЬ ЧЕГО=НИБУДЬ В ЛОГ
+            logger.error("Ошибка при awaitTermination: ");
         }
 
         System.out.println();
-
-        accountList.forEach(x -> System.out.println(x));
-
-        //accountList.forEach(x -> x.getBalance());
+        accountList.forEach(System.out::println);
         System.out.println("Сумма по всем аккаунтам: " + accountList.stream().mapToLong(x -> x.getBalance()).sum());
-
     }
 
-    public List<Account> generateAccounts() {
+    private List<Account> generateAccounts() {
 
-        List<Account> accountList = new ArrayList<Account>();
+        List<Account> accountList = new ArrayList<>();
 
-        for (int i = 0; i < 4; i++) {
+        Random random = new Random();
+        for (int i = 0; i < Constants.QUANTITY_OF_ACCOUNT_FOR_GENERATION; i++) {
             Account account = new Account();
-            Random random = new Random();
             account.setName(String.valueOf(random.nextInt(Integer.MAX_VALUE)));
             account.setBalance(Constants.INITIAL_ACCOUNT_BALANCE);
             accountList.add(account);
